@@ -51,8 +51,6 @@ public class Test {
                      .mapToInt(score -> score.charAt(0) - score.charAt(2))
                      .map(match -> match > 0 ? 3 : match == 0 ? 1 : 0)
                      .sum();*/
-
-
         }
         return overall;
     }
@@ -68,6 +66,35 @@ public class Test {
         return String.format("%.2f", sum);
     }
 
+    public static String highAndLow(String numbers) {
+        int[] numSer = Arrays.stream(numbers.split(" ", 0))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        return Arrays.stream(numSer)
+                .max()
+                .getAsInt()
+                +" "+
+                Arrays.stream(numSer)
+                .min()
+                .getAsInt();
+    }
+    /*Na ezt így is lehetet volna:  static String highAndLow(String numbers) {
+    var stats = stream(numbers.split(" ")).mapToInt(Integer::parseInt).summaryStatistics();
+    return stats.getMax() + " " + stats.getMin();
+    }*/
+
+    public static String accum(String s) {
+        char[] charArr = s.toUpperCase().toCharArray();
+        String newString = "";
+        for(int i=0; i < charArr.length;i++){
+            newString=newString+charArr[i]+Character.toString(charArr[i]).repeat(i).toLowerCase()+'-';
+        }
+        return (newString+"--").replace("---","");
+    }
+    /*alternativ:      return IntStream.range(0,s.length())
+               .mapToObj(i->Stream.generate(()->s.charAt(i)).limit(i+1).collect(StringBuilder::new,StringBuilder::append,StringBuilder::append).toString())
+               .map(a->a.substring(0,1).toUpperCase()+a.substring(1).toLowerCase())
+               .collect(Collectors.joining("-"));*/
 
     public static String getMiddle(String word) {
         int evenSecNumb = (int) word.length() % 2 > 0 ? (int) Math.ceil(word.length() / 2) : -1;
@@ -75,6 +102,24 @@ public class Test {
         if (evenSecNumb > 0)
             revStr.append(word.charAt(evenSecNumb-1));
         return   revStr.toString() ;
+    }
+
+    public static String reverseWords(final String original)
+    {
+        String[] reverseArray = original.split(" ",0);
+        String returnString = original;
+        for (String word : reverseArray){
+            returnString = returnString.replaceAll("\\b"+word.replace(".","\\."),new StringBuilder(word).reverse().toString());
+        }
+        return returnString;
+    }
+    /* ez is szimpatikus:   return Arrays.stream(original.split("(?<=\\s)|(?=\\s+)"))
+                .map(str -> new StringBuilder(str).reverse().toString())
+                .collect(Collectors.joining());
+    }*/
+
+    public static String rps(String p1, String p2) {
+        return p1.equals(p2) ? "Draw!" : "Player " + ("scissorspaper paperrock rockscissors".contains(p1+p2)?1:2) + " won!";
     }
 
     public static String getMiddles(String word) {
@@ -112,11 +157,14 @@ public class Test {
         //System.out.println(sum(new int[]{1,2,3,4,5}));
         //System.out.println(sum(new int[]{}));
 
-        System.out.println(find_average(new int[]{1, 1, 1}));
+        /*System.out.println(find_average(new int[]{1, 1, 1}));
         System.out.println(find_average(new int[]{1, 2, 3, 3}));
         System.out.println(feast("coca", "cakec"));
         System.out.println(getMiddles("tesztseg"));
         System.out.println(smash(new String[] {"teszt", "meg ezt"}));
+        System.out.println(accum("teszt"));*/
+        //System.out.println(reverseWords("teszteljünk ki mindent"));
+        System.out.println(reverseWords("The quick brown fox jumps over the lazy dog."));
         /*public static String findNeedle(Object[] haystack) {
             return String.format("found the needle at position %d", java.util.Arrays.asList(haystack).indexOf("needle"));
         }*/
