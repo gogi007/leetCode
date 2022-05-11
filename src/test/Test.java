@@ -1,6 +1,8 @@
 package test;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Test {
@@ -28,6 +30,21 @@ public class Test {
         return Arrays.stream(numbers)
                 .filter(y -> y != min && y != max)
                 .sum();
+    }
+
+    public static String printerError(String s) {
+        return matchesInString(s, "([N-Z]|[n-z])") + "/" + matchesInString(s, "([A-Z]|[a-z])");
+    }
+    /* alternativ:   public static String printerError(String s) {
+        return s.chars().filter(c -> c > 'm').count() + "/" + s.length();
+    }*/
+    public static int matchesInString(String checkString, String matchString) {
+        Matcher matcher
+                = Pattern.compile(matchString).matcher(checkString);
+        int matchesLength = 0;
+        while (matcher.find())
+            matchesLength += matcher.group().length();
+        return matchesLength;
     }
 
     public static String smash(String... words) {
@@ -73,10 +90,10 @@ public class Test {
         return Arrays.stream(numSer)
                 .max()
                 .getAsInt()
-                +" "+
+                + " " +
                 Arrays.stream(numSer)
-                .min()
-                .getAsInt();
+                        .min()
+                        .getAsInt();
     }
     /*Na ezt így is lehetet volna:  static String highAndLow(String numbers) {
     var stats = stream(numbers.split(" ")).mapToInt(Integer::parseInt).summaryStatistics();
@@ -86,10 +103,10 @@ public class Test {
     public static String accum(String s) {
         char[] charArr = s.toUpperCase().toCharArray();
         String newString = "";
-        for(int i=0; i < charArr.length;i++){
-            newString=newString+charArr[i]+Character.toString(charArr[i]).repeat(i).toLowerCase()+'-';
+        for (int i = 0; i < charArr.length; i++) {
+            newString = newString + charArr[i] + Character.toString(charArr[i]).repeat(i).toLowerCase() + '-';
         }
-        return (newString+"--").replace("---","");
+        return (newString + "--").replace("---", "");
     }
     /*alternativ:      return IntStream.range(0,s.length())
                .mapToObj(i->Stream.generate(()->s.charAt(i)).limit(i+1).collect(StringBuilder::new,StringBuilder::append,StringBuilder::append).toString())
@@ -98,18 +115,17 @@ public class Test {
 
     public static String getMiddle(String word) {
         int evenSecNumb = (int) word.length() % 2 > 0 ? (int) Math.ceil(word.length() / 2) : -1;
-        StringBuilder revStr = new StringBuilder(word.charAt((int) Math.floor(word.length() / 2)-1));
+        StringBuilder revStr = new StringBuilder(word.charAt((int) Math.floor(word.length() / 2) - 1));
         if (evenSecNumb > 0)
-            revStr.append(word.charAt(evenSecNumb-1));
-        return   revStr.toString() ;
+            revStr.append(word.charAt(evenSecNumb - 1));
+        return revStr.toString();
     }
 
-    public static String reverseWords(final String original)
-    {
-        String[] reverseArray = original.split(" ",0);
+    public static String reverseWords(final String original) {
+        String[] reverseArray = original.split(" ", 0);
         String returnString = original;
-        for (String word : reverseArray){
-            returnString = returnString.replaceAll("\\b"+word.replace(".","\\."),new StringBuilder(word).reverse().toString());
+        for (String word : reverseArray) {
+            returnString = returnString.replaceAll("\\b" + word.replace(".", "\\."), new StringBuilder(word).reverse().toString());
         }
         return returnString;
     }
@@ -118,21 +134,26 @@ public class Test {
                 .collect(Collectors.joining());
     }*/
 
+    public static String remove(String str) {
+        return str.substring(1,str.length()-1);
+    }
+
+
     public static String rps(String p1, String p2) {
-        return p1.equals(p2) ? "Draw!" : "Player " + ("scissorspaper paperrock rockscissors".contains(p1+p2)?1:2) + " won!";
+        return p1.equals(p2) ? "Draw!" : "Player " + ("scissorspaper paperrock rockscissors".contains(p1 + p2) ? 1 : 2) + " won!";
     }
 
     public static String getMiddles(String word) {
-        int evenSecNumbUp = (int) Math.ceil((word.length() / 2) );
+        int evenSecNumbUp = (int) Math.ceil((word.length() / 2));
         int evenSecNumbDown = (int) Math.floor((word.length() / 2));
         StringBuilder revStr = new StringBuilder();
         System.out.println(evenSecNumbUp);
-            System.out.println(evenSecNumbDown);
+        System.out.println(evenSecNumbDown);
         if (evenSecNumbUp == evenSecNumbDown) {
-            revStr.append(word.charAt(evenSecNumbDown+1));
+            revStr.append(word.charAt(evenSecNumbDown + 1));
         }
         revStr.append(word.charAt(evenSecNumbUp));
-        return   revStr.toString() ;
+        return revStr.toString();
     }
 
     public static boolean betterThanAverage(int[] classPoints, int yourPoints) {
@@ -146,7 +167,7 @@ public class Test {
 
     public static int[] map(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
-            arr[i]*= 2;
+            arr[i] *= 2;
         }
         return arr;
         //helyette ez is jó lett volna
@@ -165,6 +186,8 @@ public class Test {
         System.out.println(accum("teszt"));*/
         //System.out.println(reverseWords("teszteljünk ki mindent"));
         System.out.println(reverseWords("The quick brown fox jumps over the lazy dog."));
+        System.out.println(printerError("aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbmmmmmmmmmmmmmmmmmmmxyz"));
+        System.out.println(remove("Gogolák"));
         /*public static String findNeedle(Object[] haystack) {
             return String.format("found the needle at position %d", java.util.Arrays.asList(haystack).indexOf("needle"));
         }*/
