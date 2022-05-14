@@ -1,8 +1,9 @@
 package test;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import java.util.stream.Collectors;
 
 public class Test {
@@ -35,6 +36,7 @@ public class Test {
     public static String printerError(String s) {
         return matchesInString(s, "([N-Z]|[n-z])") + "/" + matchesInString(s, "([A-Z]|[a-z])");
     }
+
     /* alternativ:   public static String printerError(String s) {
         return s.chars().filter(c -> c > 'm').count() + "/" + s.length();
     }*/
@@ -125,7 +127,8 @@ public class Test {
         String[] reverseArray = original.split(" ", 0);
         String returnString = original;
         for (String word : reverseArray) {
-            returnString = returnString.replaceAll("\\b" + word.replace(".", "\\."), new StringBuilder(word).reverse().toString());
+            returnString = returnString.replaceAll("\\b" + word.replace(".", "\\."),
+                    new StringBuilder(word).reverse().toString());
         }
         return returnString;
     }
@@ -134,8 +137,91 @@ public class Test {
                 .collect(Collectors.joining());
     }*/
 
+    public static boolean isIsogram(String str) {
+        char[] charSame = new char[str.length()];
+        boolean result = true;
+        for (int i = 0; i < str.length(); i++) {
+            if (charSame.length > 0) {
+                for (char f : charSame) {
+                    if (str.toLowerCase().charAt(i) == f) {
+                        result = false;
+                        break;
+                    }
+                }
+            }
+            if (result) {
+                charSame[i] = str.toLowerCase().charAt(i);
+            } else {
+                break;
+            }
+        }
+        return result;
+    }
+    /*hát ez sokkal egyszerűbb:
+        return str.length() == str.toLowerCase().chars().distinct().count();
+
+     még ez is jó
+     Set<Character> letters = new HashSet<Character>();
+
+    for (int i = 0; i < str.length(); ++i) {
+      if (letters.contains(str.toLowerCase().charAt(i))) {
+        return false;
+      }
+
+      letters.add(str.charAt(i));
+    }
+
+    return true;
+  }
+
+     */
+
+    public static int[] digitize(long n) {
+        StringBuilder str = new StringBuilder(String.valueOf(n));
+        String reversedStr = str.reverse().toString();
+        int[] resultArr = new int[reversedStr.length()];
+        for (int i = 0; i < reversedStr.length(); i++) {
+            System.out.println(reversedStr.charAt(i));
+            resultArr[i] = Character.getNumericValue(reversedStr.charAt(i));
+        }
+        return resultArr;
+    }
+    /*nagyon elegáns:
+             return new StringBuilder().append(n)
+                                  .reverse()
+                                  .chars()
+                                  .map(Character::getNumericValue)
+                                  .toArray();
+  }*/
+
+    public static int[] countPositivesSumNegatives(int[] input)
+    {
+        if (input != null){
+            int[] sumArr = new int[]{
+                    (int) Arrays.stream(input)
+                            .filter(i -> i > 0)
+                            .count(),
+                    (int) Arrays.stream(input)
+                            .filter(i -> i < 0)
+                            .sum()
+            };
+            if (sumArr[0] == 0 && sumArr[1] == 0)
+                return new int[]{};
+            else
+                return sumArr;
+        }
+        else
+            return new int[]{};
+    }
+    /* intStream is jó lehet:
+    return input == null || input.length == 0 ?
+          new int[0] :
+          new int[] { (int)IntStream.of(input).filter(i->i>0).count(), IntStream.of(input).filter(i->i<0).sum() };
+      }
+    */
+
     public static String remove(String str) {
-        return str.substring(1,str.length()-1);
+        return str.substring(1, str.length() - 1);
     }
 
 
@@ -185,9 +271,11 @@ public class Test {
         System.out.println(smash(new String[] {"teszt", "meg ezt"}));
         System.out.println(accum("teszt"));*/
         //System.out.println(reverseWords("teszteljünk ki mindent"));
-        System.out.println(reverseWords("The quick brown fox jumps over the lazy dog."));
+        /*System.out.println(reverseWords("The quick brown fox jumps over the lazy dog."));
         System.out.println(printerError("aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbmmmmmmmmmmmmmmmmmmmxyz"));
         System.out.println(remove("Gogolák"));
+        System.out.println(Arrays.toString(digitize(35231)));*/
+        System.out.println(Arrays.toString(countPositivesSumNegatives(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -11, -12, -13, -14, -15})));
         /*public static String findNeedle(Object[] haystack) {
             return String.format("found the needle at position %d", java.util.Arrays.asList(haystack).indexOf("needle"));
         }*/
