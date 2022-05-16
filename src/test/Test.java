@@ -194,9 +194,8 @@ public class Test {
                                   .toArray();
   }*/
 
-    public static int[] countPositivesSumNegatives(int[] input)
-    {
-        if (input != null){
+    public static int[] countPositivesSumNegatives(int[] input) {
+        if (input != null) {
             int[] sumArr = new int[]{
                     (int) Arrays.stream(input)
                             .filter(i -> i > 0)
@@ -209,8 +208,7 @@ public class Test {
                 return new int[]{};
             else
                 return sumArr;
-        }
-        else
+        } else
             return new int[]{};
     }
     /* intStream is jó lehet:
@@ -227,6 +225,32 @@ public class Test {
 
     public static String rps(String p1, String p2) {
         return p1.equals(p2) ? "Draw!" : "Player " + ("scissorspaper paperrock rockscissors".contains(p1 + p2) ? 1 : 2) + " won!";
+    }
+
+    public static int calculateYears(double principal, double interest, double tax, double desired) {
+        int year = 0;
+        while (principal < desired) {
+            principal += ((principal * interest) - (principal * interest * tax));
+            year++;
+        }
+        return year;
+    }
+
+    public static char getGrade(int s1, int s2, int s3) {
+        int aveNum = Math.round((s1 + s2 + s3) / 3);
+        char result = ' ';
+        if (0 <= aveNum && aveNum < 60) {
+            result = 'F';
+        } else if (60 <= aveNum && aveNum < 70) {
+            result = 'D';
+        } else if (70 <= aveNum && aveNum < 80) {
+            result = 'C';
+        } else if (80 <= aveNum && aveNum < 90) {
+            result = 'B';
+        } else {
+            result = 'A';
+        }
+        return result;
     }
 
     public static String getMiddles(String word) {
@@ -275,7 +299,10 @@ public class Test {
         System.out.println(printerError("aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbmmmmmmmmmmmmmmmmmmmxyz"));
         System.out.println(remove("Gogolák"));
         System.out.println(Arrays.toString(digitize(35231)));*/
-        System.out.println(Arrays.toString(countPositivesSumNegatives(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -11, -12, -13, -14, -15})));
+        //System.out.println(Arrays.toString(countPositivesSumNegatives(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -11, -12, -13, -14, -15})));
+
+        System.out.println(calculateYears(1000,0.05,0.18,1100));
+
         /*public static String findNeedle(Object[] haystack) {
             return String.format("found the needle at position %d", java.util.Arrays.asList(haystack).indexOf("needle"));
         }*/
