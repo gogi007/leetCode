@@ -49,6 +49,11 @@ public class Test {
         return matchesLength;
     }
 
+    public static boolean solution(String str, String ending) {
+        return  (str+" ").replace(ending+" ","").length()<(str+" ").length() ? true : false;
+    }
+    /*ennyi lett volna: return str.endsWith(ending);*/
+
     public static String smash(String... words) {
         return Arrays.asList(words)
                 .stream()
@@ -194,6 +199,23 @@ public class Test {
                                   .toArray();
   }*/
 
+    public static int squareDigits(int n) {
+        StringBuilder str = new StringBuilder();
+        for (char ch : String.valueOf(n).toCharArray()) {
+            str.append(Character.getNumericValue(ch) * Character.getNumericValue(ch));
+        }
+        return Integer.parseInt(str.toString());
+    }
+/*szimpatikusabb:
+        public int squareDigits(int n) {
+        return Integer.parseInt(String.valueOf(n)
+                                      .chars()
+                                      .map(i -> Integer.parseInt(String.valueOf((char) i)))
+                                      .map(i -> i * i)
+                                      .mapToObj(String::valueOf)
+                                      .collect(Collectors.joining("")));
+    }
+ */
     public static int[] countPositivesSumNegatives(int[] input) {
         if (input != null) {
             int[] sumArr = new int[]{
@@ -302,7 +324,8 @@ public class Test {
         //System.out.println(Arrays.toString(countPositivesSumNegatives(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -11, -12, -13, -14, -15})));
 
         System.out.println(calculateYears(1000,0.05,0.18,1100));
-
+        System.out.println(solution("samurai", "ai"));
+        System.out.println(squareDigits(9119));
         /*public static String findNeedle(Object[] haystack) {
             return String.format("found the needle at position %d", java.util.Arrays.asList(haystack).indexOf("needle"));
         }*/
